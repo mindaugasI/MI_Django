@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Public library</h1>
+    <p>Welcome to the paradise of books!</p>
+    <p>At the moment available:</p>
+    <ul>
+        <li><strong>Books:</strong> {{ books }}</li>
+        <li><strong>Book instance:</strong> {{ book_instances }}</li>
+        <li><strong>Available:</strong> {{ available }}</li>
+        <li><strong>Authors:</strong> {{ authors }}</li>
+    </ul>
+
+
+{% endblock %}
