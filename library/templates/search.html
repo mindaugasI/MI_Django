@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Search by "{{query}}" result:</h1>
+  </br>
+  {% if books %}
+  <ul>
+    {% for book in books %}
+      <li>
+        <a href="{% url 'book-detail' book.book_id %}">{{ book.title }}</a> ({{book.author}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>Oops. Nothing found :(</p>
+  {% endif %}
+
+  {% endblock %}

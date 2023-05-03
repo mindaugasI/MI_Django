@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <img src="{{ book.cover.url }}" style="margin-bottom: 20px;">
   <h1>{{ book.title }}</h1>
 
   <p><strong>Author:</strong> <a href="{% url 'author' book.author.pk %}">{{ book.author }}</a></p>

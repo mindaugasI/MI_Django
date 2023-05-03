@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from django_resized import ResizedImageField
 
 class Genre(models.Model):
     """For genre table in database"""
@@ -37,6 +38,8 @@ class Book(models.Model):
         'ISBN', max_length=13,
         help_text='13 Symbol <a href="https://www.isbn-international.org/content/what-isbn">ISBN kodas</a>')
     genre = models.ManyToManyField(Genre, help_text='Enter books genre: ')
+    cover = ResizedImageField('Cover', size=[300, 400], upload_to='covers', null=True)
+
 
     def __str__(self):
         return self.title

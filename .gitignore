@@ -131,3 +131,5 @@ dmypy.json
 
 # TEST script
 amazing_test.py
+
+*media/
