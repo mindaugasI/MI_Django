@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <h1>Public library</h1>
-    <p>Welcome to the paradise of books!</p>
+    {% if user.is_authenticated %}
+        <p>Welcome {{ user.username }} !</p>
+    {% else %}
+        <p>Welcome to the paradise of books!</p>
+    {% endif %}
     <p>At the moment available:</p>
     <ul>
         <li><strong>Books:</strong> {{ books }}</li>
