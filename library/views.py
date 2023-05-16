@@ -8,12 +8,12 @@ from django.db.models import Q
 # Class based
 class BookListView(generic.ListView):
     model = Book
-    # patys galite nustatyti šablonui kintamojo vardą
+    # You can set a variable name for the template yourself
     context_object_name = 'my_book_list'
-    # gauti sąrašą 3 knygų su žodžiu pavadinime 'The'
+    # get a list of 3 books with the word 'The' in the title
   #  queryset = Book.objects.filter(title__icontains='The')[:3]
-    # šitą jau panaudojome. Neįsivaizduojate, kokį default kelią sukuria :)
     paginate_by = 2
+    # We have already used this one. You have no idea what default path it creates :)
     template_name = 'book_list.html'
 
 
