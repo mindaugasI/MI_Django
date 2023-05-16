@@ -44,11 +44,15 @@ def index(request):
     # Count number of authors
     author_count = Author.objects.all().count()
 
+    # With the additional variable num_visits and load it into the context.
+    visits_count = request.session.get('visits_count', 1)
+    request.session['visits_count'] = visits_count + 1
     context = {
         'books': book_count,
         'book_instances': book_instance_count,
         'authors': author_count,
-        'available': available_books_count
+        'available': available_books_count,
+        'visits': visits_count,
     }
 
     return render(request, "index.html", context)
