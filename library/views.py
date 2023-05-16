@@ -74,3 +74,10 @@ def search(request):
     search_results = Book.objects.filter(Q(title__icontains=query) | Q(description__icontains=query) |
                                          Q(author__first_name__icontains=query))
     return render(request, 'search.html', {'books': search_results, 'query': query})
+
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def profile(request):
+    return render(request, 'profile.html')
