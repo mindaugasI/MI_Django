@@ -8,12 +8,12 @@ from django.db.models import Q
 # Class based
 class BookListView(generic.ListView):
     model = Book
-    # patys galite nustatyti šablonui kintamojo vardą
+    # You can set a variable name for the template yourself
     context_object_name = 'my_book_list'
-    # gauti sąrašą 3 knygų su žodžiu pavadinime 'The'
+    # get a list of 3 books with the word 'The' in the title
   #  queryset = Book.objects.filter(title__icontains='The')[:3]
-    # šitą jau panaudojome. Neįsivaizduojate, kokį default kelią sukuria :)
     paginate_by = 2
+    # We have already used this one. You have no idea what default path it creates :)
     template_name = 'book_list.html'
 
 
@@ -36,17 +36,19 @@ class BookDetailView(generic.DetailView):
 
 
 def index(request):
+    # Count number of books and book instances
     book_count = Book.objects.all().count()
     book_instance_count = BookInstance.objects.all().count()
-    aveilable_books_count = BookInstance.objects.filter(book_status__exact='a').count()
-
+    # Count number of available books (with status 'a')
+    available_books_count = BookInstance.objects.filter(book_status__exact='a').count()
+    # Count number of authors
     author_count = Author.objects.all().count()
 
     context = {
         'books': book_count,
         'book_instances': book_instance_count,
         'authors': author_count,
-        'available': aveilable_books_count
+        'available': available_books_count
     }
 
     return render(request, "index.html", context)
