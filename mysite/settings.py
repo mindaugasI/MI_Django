@@ -138,8 +138,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_POST = 587
 EMAIL_USE_TLS = True
 # email from which it will be sent
-EMAIL_HOST_USER = 'mano_pastas@gmail.com'
+EMAIL_HOST_USER = config('EMAIL_ADDRESS')
 # password
-EMAIL_HOST_PASSWORD = 'VerySecret'
+EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 
 
