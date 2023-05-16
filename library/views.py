@@ -36,17 +36,19 @@ class BookDetailView(generic.DetailView):
 
 
 def index(request):
+    # Count number of books and book instances
     book_count = Book.objects.all().count()
     book_instance_count = BookInstance.objects.all().count()
-    aveilable_books_count = BookInstance.objects.filter(book_status__exact='a').count()
-
+    # Count number of available books (with status 'a')
+    available_books_count = BookInstance.objects.filter(book_status__exact='a').count()
+    # Count number of authors
     author_count = Author.objects.all().count()
 
     context = {
         'books': book_count,
         'book_instances': book_instance_count,
         'authors': author_count,
-        'available': aveilable_books_count
+        'available': available_books_count
     }
 
     return render(request, "index.html", context)
