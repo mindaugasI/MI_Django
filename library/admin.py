@@ -25,11 +25,12 @@ class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'book_status', 'due_back', 'change_format')
     list_editable = ('due_back', 'book_status')
     list_filter = ('book_status',)
+    search_fields = ('instance_id', 'book__title')
     fieldsets = (
         ('General', {'fields': ('instance_id', 'book')}),
-        ('Availability', {'fields': ('book_status', 'due_back')})
+        ('Availability', {'fields': ('book_status', 'due_back', 'reader')})
     )
-    search_fields = ('instance_id', 'book__title')
+
 
 
 admin.site.register(Author, AuthorAdmin)

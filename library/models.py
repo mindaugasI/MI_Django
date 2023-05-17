@@ -1,6 +1,9 @@
 from django.db import models
 import uuid
 from django_resized import ResizedImageField
+from django.contrib.auth.models import User
+from datetime import date
+from tinymce.models import HTMLField
 
 class Genre(models.Model):
     """For genre table in database"""
@@ -18,8 +21,11 @@ class Author(models.Model):
     author_id = models.AutoField(primary_key=True)
     first_name = models.CharField('First name', max_length=100)
     last_name = models.CharField('Last name', max_length=100)
-    description = models.TextField('Description', max_length=2000, default='')
+    # Simple, base text editor.
+#    description = models.TextField('Description', max_length=2000, default='')
 
+    # Gives us more capabilities to format text in admins site.
+    description = HTMLField()
     class Meta:
         ordering = ['last_name', 'first_name']
 
@@ -59,8 +65,13 @@ class BookInstance(models.Model):
         ('a', 'Available'),
         ('r', 'Reserved'),
     )
-
     book_status = models.CharField(max_length=1, default='a', blank=True, choices=LOAN_STATUS, help_text='Book status')
+    reader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
 
     class Meta:
         ordering = ['due_back']
