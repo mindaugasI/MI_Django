@@ -3,6 +3,8 @@ from .models import Genre, Author, Book, BookInstance
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 # Class based
@@ -82,6 +84,16 @@ def search(request):
 
 
 from django.contrib.auth.decorators import login_required
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    template_name = 'user_books.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(reader=self.request.user).filter(book_status__exact='t').order_by('due_back')
+
 
 @login_required
 def profile(request):
