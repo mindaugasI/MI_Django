@@ -98,3 +98,10 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+
+#----------------------------------------------------
+
+class UserBookDetailViews(LoginRequiredMixin, generic.DetailView):
+    model = BookInstance
+    pass
