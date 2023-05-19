@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import Author, Genre, Book, BookInstance, BookReview, Profile
 
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -41,4 +41,4 @@ admin.site.register(Book, BookAmin)
 admin.site.register(Genre)
 admin.site.register(BookInstance, BookInstanceAdmin)
 admin.site.register(BookReview, BookReviewAdmin)
-#admin.site.register(Profile)
+admin.site.register(Profile)

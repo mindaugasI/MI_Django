@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import User
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from .forms import BookReviewForm
@@ -107,7 +108,7 @@ def search(request):
     return render(request, 'search.html', {'books': search_results, 'query': query})
 
 
-from django.contrib.auth.decorators import login_required
+
 
 
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
@@ -150,6 +151,7 @@ def register(request):
 
 
 #----------------------------------------------------
+
 @login_required
 def profile(request):
     return render(request, 'profile.html')
