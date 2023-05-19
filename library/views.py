@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Genre, Author, Book, BookInstance
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.forms import User
+from django.views.decorators.csrf import csrf_protect
+from django.contrib import messages
 
 
 # Class based
@@ -94,7 +96,38 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return BookInstance.objects.filter(reader=self.request.user).filter(book_status__exact='t').order_by('due_back')
 
+#----------------------User-Registration-----------------------------
+@csrf_protect
+def register(request):
+    if request.method == "POST":
+        # take values from registration form
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        # checking if the passwords matches
+        if password == password2:
+            # checking if the username is not taken
+            if User.objects.filter(username=username).exists():
+                messages.error(request, f'The username {username} is taken!')
+                return redirect('register')
+            else:
+                # checking if the email does not exist
+                if User.objects.filter(email=email).exists():
+                    messages.error(request, f'The user with email {email} already registered!')
+                    return redirect('register')
+                else:
+                    # if everything ok, creates new user
+                    User.objects.create_user(username=username, email=email, password=password)
+                    messages.info(request, f'User {username} has been registered!')
+                    return redirect('login')
+        else:
+            messages.error(request, 'Passwords do not match!')
+            return redirect('register')
+    return render(request, 'registration/register.html')
 
+
+#----------------------------------------------------
 @login_required
 def profile(request):
     return render(request, 'profile.html')
