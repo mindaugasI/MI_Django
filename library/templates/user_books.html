@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>My taken books</h1>
+    <h1>Mano paimtos knygos</h1>
+    <img class="rounded-circle" src="{{user.profile.photo.url}}">
+    {% if books %}
+        {% for bookinst in books %}
+    <hr>
+        <ul>
+        <li><strong class="{% if bookinst.is_overdue %}text-danger{% endif %}">Book name: {{bookinst.book.title}}</strong></li>
+        <li><strong>Return by:</strong> {{bookinst.due_back}}</li>
+        <br/>
+        <a class="btn btn-primary" href="{{ bookinst.pk }}" role="button">Review</a>
+      </li>
 
-    {% if bookinstance_list %}
-    <ul>
-
-      {% for bookinst in bookinstance_list %}
-        <img class="rounded-circle" src="{{bookinst.reader.profile.photo.url}}">
-        <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-            <a href="{% url 'book-detail' bookinst.book.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }})
-        </li>
-      {% endfor %}
     </ul>
-
+{% endfor %}
     {% else %}
-      <p>At the moment you have no taken books.</p>
-    {% endif %}       
+      <p>There are no books borrowed.</p>
+    {% endif %}
 {% endblock %}

@@ -3,13 +3,15 @@ from .models import Genre, Author, Book, BookInstance
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from .forms import BookReviewForm, UserUpdateForm, ProfileUpdateForm
 from django.views.generic.edit import FormMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 
 
 # Class based
@@ -110,14 +112,60 @@ def search(request):
 
 
 
-
-class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+#-------------------------cRud---------------------------------------
+class LoanedBooksByUserListView(LoginRequiredMixin, ListView):
     model = BookInstance
+    context_object_name = 'books'
     template_name = 'user_books.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return BookInstance.objects.filter(reader=self.request.user).filter(book_status__exact='t').order_by('due_back')
+        return BookInstance.objects.filter(reader=self.request.user).order_by('due_back')
+
+
+class BookByUserDetailView(LoginRequiredMixin, DetailView):
+    model = BookInstance
+    template_name = 'user_book.html'
+
+
+class BookByUserCreateView(LoginRequiredMixin, CreateView):
+    model = BookInstance
+    fields = ['book', 'due_back']
+    success_url = "/library/mybooks/"
+    template_name = 'user_book_form.html'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        return super().form_valid(form)
+
+    def get_absolute_url(self):
+        """Specifies the final address of a specific description"""
+        return reverse('book-detail', args=[str(self.instance_id)])
+
+
+class BookByUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = BookInstance
+    fields = ['book', 'due_back']
+    success_url = "/library/mybooks/"
+    template_name = 'user_book_form.html'
+
+    def form_valid(self, form):
+        form.instance.reader = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        book = self.get_object()
+        return self.request.user == book.reader
+
+
+class BookByUserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = BookInstance
+    success_url = "/library/mybooks/"
+    template_name = 'user_book_delete.html'
+
+    def test_func(self):
+        book = self.get_object()
+        return self.request.user == book.reader
 
 #----------------------User-Registration-----------------------------
 @csrf_protect
@@ -175,6 +223,4 @@ def profile(request):
 
 #----------------------------------------------------
 
-class UserBookDetailViews(LoginRequiredMixin, generic.DetailView):
-    model = BookInstance
-    pass
+

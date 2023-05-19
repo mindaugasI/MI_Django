@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My taken book:</h1>
+    <hr>
+        <ul>
+        <img class="rounded-circle" src="{{object.book.cover.url}}">
+        <li><strong class="{% if object.is_overdue %}text-danger{% endif %}">Book name: {{object.book.title}}</strong></li>
+        <li><strong>Return by:</strong> {{object.due_back}}</li>
+            {% if object.reader == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'my-book-update' object.instance_id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'my-book-delete' object.instance_id %}">Delete</a>
+            </div>
+            {% endif %}
+        <br/>
+      </li>
+    </ul>
+{% endblock %}

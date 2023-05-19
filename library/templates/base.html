@@ -31,6 +31,7 @@
             {{ user.get_username }}</a></li>
             <li class="nav-item"><a class="nav-link" href="#">You are logged in as: {{ user.get_username }}</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'my-borrowed'%}">My books</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'my-borrowed-new'%}?next=/library">New</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'logout'%}?next=/library">Logout</a></li>
           {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a></li>
