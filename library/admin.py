@@ -31,10 +31,14 @@ class BookInstanceAdmin(admin.ModelAdmin):
         ('Availability', {'fields': ('book_status', 'due_back', 'reader')})
     )
 
+class BookReviewAdmin(admin.ModelAdmin):
+    list_display = ('book', 'date_created', 'reviewer', 'content')
+
 
 
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAmin)
 admin.site.register(Genre)
 admin.site.register(BookInstance, BookInstanceAdmin)
+admin.site.register(BookReview, BookReviewAdmin)
 #admin.site.register(Profile)

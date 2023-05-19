@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import Genre, Author, Book, BookInstance
 from django.views import generic
 from django.core.paginator import Paginator
@@ -7,6 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
+from .forms import BookReviewForm
+from django.views.generic.edit import FormMixin
 
 
 # Class based
@@ -34,10 +36,30 @@ class BookListView(generic.ListView):
     #         return context
 
 
-class BookDetailView(generic.DetailView):
+class BookDetailView(FormMixin, generic.DetailView):
     model = Book
     template_name = 'book_detail.html'
+    form_class = BookReviewForm
 
+    # we indicate where we will end up if the comment succeeds.
+    def get_success_url(self):
+        return reverse('book-detail', kwargs={'pk': self.object.book_id})
+
+    # standard rewrite of the post method using FormMixin.
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # here we specify that the book will be exactly the one under which we comment, and the user will be the one who is logged in.
+    def form_valid(self, form):
+        form.instance.book = self.object
+        form.instance.reviewer = self.request.user
+        form.save()
+        return super(BookDetailView, self).form_valid(form)
 
 def index(request):
     # Count number of books and book instances

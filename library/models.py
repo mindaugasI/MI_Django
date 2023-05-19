@@ -81,6 +81,21 @@ class BookInstance(models.Model):
     def __str__(self):
         return f"{self.book.title}"
 
+
+class BookReview(models.Model):
+    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True, blank=True)
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField('Review', max_length=2000)
+
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = 'Reviews'
+        ordering = ['-date_created']
+
+
+
+
 # class Profile(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE)
 #     photo = models.ImageField(default="profile_pics/default.png", upload_to="profile_pics")

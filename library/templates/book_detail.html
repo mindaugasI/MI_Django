@@ -8,6 +8,17 @@
   <p><strong>Description:</strong> {{ book.description }}</p>
   <p><strong>ISBN:</strong> {{ book.isbn }}</p> 
   <p><strong>Genre:</strong> {{ book.genre.all|join:", " }}</p>
+  </br>
+  <h4>Reviews:</h4>
+  {% if book.bookreview_set.all %}
+    {% for review in book.bookreview_set.all %}
+      <hr>
+      <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
+      <p>{{ review.content }}</p>
+    {% endfor %}
+  {% else %}
+    <p>The book has no reviews</p>
+  {% endif %}
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Copies:</h4>
@@ -23,4 +34,15 @@
       <p class="text-muted"><strong>Id:</strong> {{ copy.instance_id }}</p>
     {% endfor %}
   </div>
+    {% if user.is_authenticated %}
+  <div class="fieldWrapper">
+    <hr><br/>
+    <h4>Leave a review:</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.content }}</br>
+      <input type="submit" value="Save">
+    </form>
+  </div>
+  {% endif %}
 {% endblock %}
