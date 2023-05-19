@@ -8,7 +8,7 @@ from django.contrib.auth.forms import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
-from .forms import BookReviewForm, UserUpdateForm, ProfileUpdateForm
+from .forms import BookReviewForm, UserUpdateForm, ProfileUpdateForm, UserBookCreateForm
 from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -130,9 +130,10 @@ class BookByUserDetailView(LoginRequiredMixin, DetailView):
 
 class BookByUserCreateView(LoginRequiredMixin, CreateView):
     model = BookInstance
-    fields = ['book', 'due_back']
+    #fields = ['book', 'due_back']
     success_url = "/library/mybooks/"
     template_name = 'user_book_form.html'
+    form_class = UserBookCreateForm
 
     def form_valid(self, form):
         form.instance.reader = self.request.user
