@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-30 19:44+0300\n"
+"PO-Revision-Date: 2023-05-30 19:54+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
+"X-Generator: Poedit 3.3.1\n"
+
+#: .\models.py:13
+msgid "Name"
+msgstr "Vardas"
+
+#: .\models.py:13
+msgid "Enter type of genre: "
+msgstr "Įveskite žanro tipą:"
+
+#: .\models.py:19
+msgid "Genre"
+msgstr "Žanras"
+
+#: .\models.py:20
+msgid "Genres"
+msgstr "Žanrai"
+
+#: .\models.py:24
+msgid "First name"
+msgstr "Vardas"
+
+#: .\models.py:25
+msgid "Last name"
+msgstr "Pavardė"
+
+#: .\models.py:43
+msgid "Title"
+msgstr "Pavadinimas"
+
+#: .\models.py:43
+msgid "Enter book title: "
+msgstr "Įveskite knygos pavadinimą:"
+
+#: .\models.py:44
+msgid "Description"
+msgstr "Aprašymas"
+
+#: .\models.py:44
+msgid "Enter short book description: "
+msgstr "Įveskite trumpą knygos aprašymą:"
+
+#: .\models.py:48
+msgid "Enter books genre: "
+msgstr "Įveskite knygos žanrą:"
+
+#: .\models.py:49
+msgid "Cover"
+msgstr "Viršelis"
+
+#: .\templates\index.html:4
+msgid "Public library"
+msgstr "Viešoji biblioteka"
+
+#: .\templates\index.html:5
+msgid "Welcome to the paradise of books!"
+msgstr "SVeiki atvykę į knygų rojų!"
+
+#: .\templates\index.html:6
+msgid "At the moment available:"
+msgstr "Šiuo metu turime:"
+
+#: .\templates\index.html:8
+msgid "Books:"
+msgstr "Knygos:"
+
+#: .\templates\index.html:9
+msgid "Book instance:"
+msgstr "Egzemplioriai:"
+
+#: .\templates\index.html:10
+msgid "Available:"
+msgstr "Šiuo metu turime:"
+
+#: .\templates\index.html:11
+msgid "Authors:"
+msgstr "Autoriai:"
+
+#: .\templates\index.html:13
+msgid "You came here"
+msgstr "Čia jūs lankotės"
+
+#: .\templates\index.html:13
+msgid "time."
+msgstr "kartą."
+
+#: .\views.py:185
+#, python-brace-format
+msgid "The username {username} is taken!"
+msgstr ""
+
+#: .\views.py:190
+#, python-brace-format
+msgid "The user with email {email} already registered!"
+msgstr ""
+
+#: .\views.py:195
+#, python-brace-format
+msgid "User {username} has been registered!"
+msgstr ""
+
+#: .\views.py:198
+msgid "Passwords do not match!"
+msgstr ""
+
+#: .\views.py:213
+msgid "Profile has been updated"
+msgstr ""
