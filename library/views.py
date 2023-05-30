@@ -11,6 +11,7 @@ from django.contrib import messages
 from .forms import BookReviewForm, UserUpdateForm, ProfileUpdateForm, UserBookCreateForm
 from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.utils.translation import gettext as _
 
 
 
@@ -181,20 +182,20 @@ def register(request):
         if password == password2:
             # checking if the username is not taken
             if User.objects.filter(username=username).exists():
-                messages.error(request, f'The username {username} is taken!')
+                messages.error(request, _(f'The username {username} is taken!'))
                 return redirect('register')
             else:
                 # checking if the email does not exist
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, f'The user with email {email} already registered!')
+                    messages.error(request, _(f'The user with email {email} already registered!'))
                     return redirect('register')
                 else:
                     # if everything ok, creates new user
                     User.objects.create_user(username=username, email=email, password=password)
-                    messages.info(request, f'User {username} has been registered!')
+                    messages.info(request, _(f'User {username} has been registered!'))
                     return redirect('login')
         else:
-            messages.error(request, 'Passwords do not match!')
+            messages.error(request, _('Passwords do not match!'))
             return redirect('register')
     return render(request, 'registration/register.html')
 
@@ -209,7 +210,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f"Profile has been updated")
+            messages.success(request, _(f"Profile has been updated"))
             return redirect('profile')
     else:
         u_form = UserUpdateForm(instance=request.user)
